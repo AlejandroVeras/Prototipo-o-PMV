@@ -1,0 +1,231 @@
+================================================================================
+    🚀 CÓMO SUBIR A GITHUB Y DESPLEGAR EN VERCEL - GUÍA VISUAL
+================================================================================
+
+OBJETIVO FINAL:
+Tener tu MVP en línea en una URL como:
+https://inventoryai-mvp.vercel.app
+
+TIEMPO TOTAL: 15 minutos máximo
+
+================================================================================
+PASO 1: PREPARAR LOS ARCHIVOS (2 minutos)
+================================================================================
+
+Tienes estos archivos HTML que necesitas en GitHub:
+
+✓ landing_page.html   → Renombra a INDEX.HTML
+✓ dashboard-mvp.html  → Renombra a DASHBOARD.HTML
+✓ vercel.json         → Copia tal cual
+✓ package.json        → Copia tal cual
+✓ README.md           → Copia tal cual
+✓ .gitignore          → Copia tal cual
+
+ESTRUCTURA FINAL RECOMENDADA:
+```
+inventoryai-mvp/
+├── public/
+│   ├── index.html          (era landing_page.html)
+│   └── dashboard.html      (era dashboard-mvp.html)
+├── .github/
+│   └── workflows/
+│       └── deploy.yml
+├── vercel.json
+├── package.json
+├── README.md
+├── QUICKSTART.md
+├── GUIA_GITHUB_VERCEL.md
+└── .gitignore
+```
+
+================================================================================
+PASO 2: CREAR CUENTA EN GITHUB (2 minutos)
+================================================================================
+
+1. Abre: https://github.com/signup
+2. Completa el formulario:
+   - Email (tu email real)
+   - Password (contraseña segura)
+   - Username (ej: tu-nombre)
+3. Verifica email
+4. ¡Listo! Ya tienes cuenta
+
+================================================================================
+PASO 3: CREAR REPOSITORIO (2 minutos)
+================================================================================
+
+OPCIÓN A: POR WEB (SIN TERMINAL)
+
+1. Abre: https://github.com/new
+2. Rellena así:
+   - Repository name: inventoryai-mvp
+   - Description: MVP de Automatización de Inventarios con IA
+   - Public (selecciona este)
+3. Click "Create repository"
+4. ¡LISTO! Tu repositorio creado
+
+================================================================================
+PASO 4: SUBIR ARCHIVOS (5 minutos)
+================================================================================
+
+OPCIÓN A: POR WEB (MÁS FÁCIL - SIN TERMINAL)
+
+1. En tu repositorio, busca botón verde "Code"
+2. A la derecha verás "Upload files" (puede estar en ... más opciones)
+3. Arrastra y suelta estos archivos:
+   
+   - index.html (antes landing_page.html)
+   - dashboard.html (antes dashboard-mvp.html)
+   - vercel.json
+   - package.json
+   - README.md
+   - .gitignore
+   
+4. Escribe en el mensaje: "Initial commit: MVP InventoryAI"
+5. Click "Commit changes"
+6. ¡LISTO! Archivos subidos
+
+---
+
+OPCIÓN B: POR TERMINAL (PARA USUARIOS AVANZADOS)
+
+Abre terminal y copia esto:
+
+cd /ruta/a/tu/carpeta
+git init
+git add .
+git commit -m "Initial commit: MVP InventoryAI"
+git branch -M main
+git remote add origin https://github.com/[TU_USERNAME]/inventoryai-mvp.git
+git push -u origin main
+
+(Reemplaza [TU_USERNAME] con tu usuario de GitHub)
+
+================================================================================
+PASO 5: DESPLEGAR EN VERCEL (3 minutos)
+================================================================================
+
+OPCIÓN RECOMENDADA: POR VERCEL.COM
+
+1. Abre: https://vercel.com/signup
+2. Haz clic en "Continue with GitHub"
+3. Autoriza a Vercel a usar tu GitHub
+4. Vercel mostrará tus repositorios
+5. Busca "inventoryai-mvp" y click en "Import"
+6. Vercel detectará automáticamente que es estático
+7. Click en "Deploy"
+8. ⏳ ESPERA 30-60 SEGUNDOS
+9. ¡LISTO! Te mostrará tu URL:
+   https://inventoryai-mvp.vercel.app
+
+================================================================================
+PASO 6: VERIFICAR QUE FUNCIONA (2 minutos)
+================================================================================
+
+1. Abre tu URL: https://inventoryai-mvp.vercel.app
+2. Deberías ver:
+   ✓ Landing page con logo InventoryAI
+   ✓ Todos los títulos y textos
+   ✓ Sección de características
+   ✓ Planes de precios
+   ✓ Formulario
+3. Click en "Ver Demo" o "Dashboard"
+4. Deberías ver el dashboard con estadísticas
+
+¿SE VE TODO? ✅ ¡LISTO!
+¿NO CARGA? Revisa la sección "PROBLEMAS COMUNES"
+
+================================================================================
+PROBLEMAS COMUNES Y SOLUCIONES
+================================================================================
+
+PROBLEMA: "No encuentro el botón Upload Files"
+SOLUCIÓN: En la página del repo, busca:
+  1. Botón verde "Code" (a la derecha)
+  2. Debajo hay más opciones
+  3. Busca "Upload files" o en "..." más opciones
+  4. Si aún no lo ves, usa terminal en lugar de web
+
+PROBLEMA: "Vercel dice Not Found 404"
+SOLUCIÓN: 
+  1. Verifica que los archivos estén DENTRO de /public
+  2. Verifica que se llamen index.html y dashboard.html
+  3. Espera 2 minutos más (Vercel necesita actualizar)
+  4. Recarga la página con Ctrl+F5
+
+PROBLEMA: "Los estilos no se ven, página en blanco"
+SOLUCIÓN:
+  1. Los archivos HTML tienen CSS integrado (no hay archivos separados)
+  2. Verifica que no cambiaste nada del HTML
+  3. Abre el navegador en "Modo incógnito" (Ctrl+Shift+N)
+  4. Limpiar caché: Settings → Clear browsing data
+
+PROBLEMA: "Git command not found" (en terminal)
+SOLUCIÓN:
+  1. Instala Git: https://git-scm.com/download
+  2. Reinicia terminal
+  3. Intenta de nuevo
+
+PROBLEMA: "401 Unauthorized" (en terminal)
+SOLUCIÓN:
+  1. GitHub pide autenticación
+  2. Usa tu username y contraseña de GitHub
+  3. O crea un token: https://github.com/settings/tokens
+
+PROBLEMA: "El formulario no envía datos"
+SOLUCIÓN:
+  1. Es NORMAL en el MVP
+  2. El formulario solo simula captures
+  3. Para que funcione, necesitarías un backend
+  4. Por ahora está bien que solo sea visual
+
+================================================================================
+RESUMEN DE URLs IMPORTANTES
+================================================================================
+
+GitHub: 
+  https://github.com/[TU_USERNAME]/inventoryai-mvp
+
+Tu MVP En Línea:
+  https://inventoryai-mvp.vercel.app
+
+Dashboard:
+  https://inventoryai-mvp.vercel.app/dashboard.html
+
+Vercel Dashboard (para ver logs/estadísticas):
+  https://vercel.com/dashboard
+
+================================================================================
+PRÓXIMOS PASOS (OPCIONALES)
+================================================================================
+
+Si quieres mejorar:
+
+1. ACTUALIZAR CAMBIOS
+   - Edita archivos localmente
+   - git commit -m "Descripción del cambio"
+   - git push
+   - Vercel se actualiza automáticamente (30 segundos)
+
+2. AGREGAR DOMINIO PERSONALIZADO
+   - En Vercel → Settings → Domains
+   - Añade tu dominio
+
+3. AGREGAR ANALYTICS
+   - En Vercel → Analytics
+   - Ver cuánta gente visita tu MVP
+
+4. CREAR BACKEND REAL
+   - Para que formulario envíe datos realmente
+   - Usa Vercel Functions con Node.js
+
+================================================================================
+¿NECESITAS AYUDA?
+================================================================================
+
+Documentación oficial:
+- GitHub: https://docs.github.com
+- Vercel: https://vercel.com/docs
+- Git: https://git-scm.com/doc
+
+¡LISTO PARA DESPLEGAR! 🚀

@@ -1,0 +1,107 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║           📱 TU MVP EN LÍNEA EN 15 MINUTOS CON GITHUB + VERCEL            ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+OPCIÓN RÁPIDA (SIN TERMINAL) - RECOMENDADA
+═══════════════════════════════════════════════════════════════════════════════
+
+PASO 1 - Crear GitHub (2 min)
+  → Abre: https://github.com/signup
+  → Completa: email, contraseña, username
+  → Verifica email
+
+PASO 2 - Crear Repositorio (1 min)
+  → Abre: https://github.com/new
+  → Nombre: inventoryai-mvp
+  → Público
+  → Crear
+
+PASO 3 - Subir Archivos (3 min)
+  → En tu repo, busca "Upload files" o el botón "Code" → "Upload"
+  → Arrastra estos archivos:
+    • landing_page.html → renombra a index.html
+    • dashboard-mvp.html → renombra a dashboard.html
+    • vercel.json
+    • package.json
+    • README.md
+    • .gitignore
+  → Mensaje: "Initial commit: MVP InventoryAI"
+  → Commit
+
+PASO 4 - Deploy en Vercel (3 min)
+  → Abre: https://vercel.com/signup
+  → "Continue with GitHub"
+  → Autoriza
+  → Busca "inventoryai-mvp"
+  → "Import"
+  → "Deploy"
+  → ⏳ Espera 30-60 segundos
+
+RESULTADO FINAL
+═══════════════════════════════════════════════════════════════════════════════
+
+Tu MVP en línea en:
+  🌐 https://inventoryai-mvp.vercel.app
+
+Dashboard disponible en:
+  📊 https://inventoryai-mvp.vercel.app/dashboard.html
+
+GitHub público:
+  💻 https://github.com/[TU_USERNAME]/inventoryai-mvp
+
+LISTO PARA PRESENTAR A TUS CLIENTES ✅
+
+═══════════════════════════════════════════════════════════════════════════════
+
+OPCIÓN AVANZADA (CON TERMINAL)
+
+git init
+git add .
+git commit -m "Initial commit: MVP InventoryAI"
+git branch -M main
+git remote add origin https://github.com/[TU_USERNAME]/inventoryai-mvp.git
+git push -u origin main
+
+Luego en Vercel.com → "Import from Git" → "Deploy"
+
+═══════════════════════════════════════════════════════════════════════════════
+
+ARCHIVOS QUE NECESITAS
+
+En /mnt/user-data/outputs/ encontrarás:
+
+✓ landing_page.html (renombra a index.html)
+✓ dashboard-mvp.html (renombra a dashboard.html)
+✓ vercel.json (copia tal cual)
+✓ package.json (copia tal cual)
+✓ README.md (copia tal cual)
+✓ .gitignore (copia tal cual)
+
+Y estos documentos para referencia:
+✓ INSTRUCCIONES_GITHUB_VERCEL.txt (guía detallada)
+✓ QUICKSTART.md (resumen rápido)
+✓ GUIA_GITHUB_VERCEL.md (guía completa con problemas)
+✓ inventoryai-mvp-github.zip (carpeta completa comprimida)
+
+═══════════════════════════════════════════════════════════════════════════════
+
+COSAS IMPORTANTES
+
+1. GitHub = Donde guardas el código
+2. Vercel = Donde tu código se publica automáticamente en línea
+3. Cada vez que haces "push" a GitHub, Vercel se actualiza automáticamente
+
+═══════════════════════════════════════════════════════════════════════════════
+
+LINKS IMPORTANTES
+
+GitHub Signup: https://github.com/signup
+Crear Repo: https://github.com/new
+Vercel: https://vercel.com
+
+═══════════════════════════════════════════════════════════════════════════════
+
+¡LISTO EN 15 MINUTOS! 🚀
+
+Si tienes dudas, revisa INSTRUCCIONES_GITHUB_VERCEL.txt
+

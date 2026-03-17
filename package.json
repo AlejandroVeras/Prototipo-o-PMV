@@ -1,0 +1,23 @@
+{
+  "name": "inventoryai-mvp",
+  "version": "1.0.0",
+  "description": "SaaS de Automatización de Inventarios con Visión Artificial - MVP",
+  "main": "public/index.html",
+  "scripts": {
+    "dev": "npx http-server public -p 3000",
+    "start": "npx http-server public -p 8000"
+  },
+  "keywords": [
+    "inventario",
+    "vision-artificial",
+    "saas",
+    "pymes",
+    "automatizacion"
+  ],
+  "author": "Ingeniería en Tecnologías Computacionales",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/[TU_USUARIO]/inventoryai-mvp.git"
+  }
+}
