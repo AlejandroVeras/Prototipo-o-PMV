@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard InventoryAI - MVP</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1F4E79;
+            --secondary: #00A8E8;
+            --accent: #FF6B6B;
+            --success: #00C896;
+            --warning: #FFA500;
+            --dark: #0D1B2A;
+            --light: #F8FAFC;
+            --border: #E5E5E5;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--light);
+            color: #333;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: var(--primary);
+            color: white;
+            padding: 2rem 0;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar-logo {
+            padding: 0 1.5rem;
+            margin-bottom: 2rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .sidebar-logo span {
+            color: var(--secondary);
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin: 0.5rem 0;
+        }
+
+        .sidebar-menu a {
+            display: block;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar-menu a:hover,
+        .sidebar-menu a.active {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-left-color: var(--secondary);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .header h1 {
+            color: var(--primary);
+            font-size: 1.8rem;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #0080A8;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid #ddd;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #f5f5f5;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            border-top: 4px solid var(--secondary);
+        }
+
+        .stat-card.warning {
+            border-top-color: var(--warning);
+        }
+
+        .stat-card.success {
+            border-top-color: var(--success);
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .stat-change {
+            font-size: 0.8rem;
+            color: var(--success);
+            margin-top: 0.5rem;
+        }
+
+        /* Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .card h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        /* Table */
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        table th {
+            background: var(--light);
+            color: var(--primary);
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid var(--border);
+        }
+
+        table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        table tr:hover {
+            background: var(--light);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-ok {
+            background: rgba(0, 200, 150, 0.1);
+            color: var(--success);
+        }
+
+        .status-warning {
+            background: rgba(255, 165, 0, 0.1);
+            color: var(--warning);
+        }
+
+        .status-critical {
+            background: rgba(255, 107, 107, 0.1);
+            color: var(--accent);
+        }
+
+        /* Warehouse List */
+        .warehouse-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .warehouse-item:hover {
+            border-color: var(--secondary);
+            background: rgba(0, 168, 232, 0.05);
+        }
+
+        .warehouse-name {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .warehouse-stat {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 0.25rem;
+        }
+
+        .accuracy-bar {
+            width: 60px;
+            height: 8px;
+            background: #eee;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .accuracy-fill {
+            height: 100%;
+            background: var(--success);
+            border-radius: 4px;
+        }
+
+        /* Camera Feed Mockup */
+        .camera-feed {
+            background: linear-gradient(135deg, #2d3e50 0%, #3d4e60 100%);
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            color: white;
+            min-height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .camera-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.8;
+        }
+
+        .camera-status {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Progress Chart */
+        .chart-bar {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .chart-label {
+            width: 100px;
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 0.9rem;
+        }
+
+        .chart-container {
+            flex: 1;
+            height: 30px;
+            background: var(--light);
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 0 1rem;
+        }
+
+        .chart-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--secondary), var(--success));
+            width: 85%;
+            border-radius: 8px;
+            transition: width 0.3s ease;
+        }
+
+        .chart-value {
+            width: 50px;
+            text-align: right;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .header-actions {
+                width: 100%;
+                margin-top: 1rem;
+            }
+        }
+
+        .demo-banner {
+            background: rgba(0, 168, 232, 0.1);
+            border-left: 4px solid var(--secondary);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .demo-banner p {
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .badge {
+            background: var(--secondary);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-logo">Inventory<span>AI</span></div>
+            <ul class="sidebar-menu">
+                <li><a href="#" class="active">📊 Dashboard</a></li>
+                <li><a href="#">📦 Inventario</a></li>
+                <li><a href="#">📷 Captura</a></li>
+                <li><a href="#">📈 Reportes</a></li>
+                <li><a href="#">⚙️ Configuración</a></li>
+                <li><a href="#">💬 Soporte</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <div class="header">
+                <h1>Dashboard Principal</h1>
+                <div class="header-actions">
+                    <button class="btn btn-secondary">📅 Febrero 2026</button>
+                    <button class="btn btn-primary">📷 Nueva Captura</button>
+                </div>
+            </div>
+
+            <!-- Demo Banner -->
+            <div class="demo-banner">
+                <p>Este es un MVP funcional que muestra cómo automatiizamos tu inventario con IA</p>
+                <span class="badge">DEMO</span>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card success">
+                    <div class="stat-label">Precisión Actual</div>
+                    <div class="stat-value">98.2%</div>
+                    <div class="stat-change">↑ 3.5% vs mes anterior</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Elementos Contados</div>
+                    <div class="stat-value">12,847</div>
+                    <div class="stat-change">↑ 1,245 esta semana</div>
+                </div>
+                <div class="stat-card warning">
+                    <div class="stat-label">Productos en Alerta</div>
+                    <div class="stat-value">23</div>
+                    <div class="stat-change">Requieren atención</div>
+                </div>
+                <div class="stat-card success">
+                    <div class="stat-label">Tiempo Ahorrado</div>
+                    <div class="stat-value">42h</div>
+                    <div class="stat-change">En capturas vs manuales</div>
+                </div>
+            </div>
+
+            <!-- Main Grid -->
+            <div class="content-grid">
+                <!-- Inventory Status -->
+                <div class="card">
+                    <h2>Estado del Inventario por Almacén</h2>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Almacén</th>
+                                    <th>Total SKUs</th>
+                                    <th>Precisión</th>
+                                    <th>Última Captura</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Principal - SD</strong></td>
+                                    <td>5,421</td>
+                                    <td>
+                                        <div class="accuracy-bar">
+                                            <div class="accuracy-fill" style="width: 98%;"></div>
+                                        </div>
+                                    </td>
+                                    <td>Hace 2h</td>
+                                    <td><span class="status-badge status-ok">Óptimo</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Distribución - SD</strong></td>
+                                    <td>4,236</td>
+                                    <td>
+                                        <div class="accuracy-bar">
+                                            <div class="accuracy-fill" style="width: 97%;"></div>
+                                        </div>
+                                    </td>
+                                    <td>Hace 4h</td>
+                                    <td><span class="status-badge status-ok">Óptimo</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Retail - Santiago</strong></td>
+                                    <td>3,190</td>
+                                    <td>
+                                        <div class="accuracy-bar">
+                                            <div class="accuracy-fill" style="width: 99%;"></div>
+                                        </div>
+                                    </td>
+                                    <td>Hace 30min</td>
+                                    <td><span class="status-badge status-ok">Óptimo</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Alerts & Notifications -->
+                <div class="card">
+                    <h2>Productos en Alerta</h2>
+                    <div class="warehouse-item" style="border-color: var(--accent); background: rgba(255, 107, 107, 0.05);">
+                        <div>
+                            <div class="warehouse-name">SKU-045928 (Tornillos 1/2")</div>
+                            <div class="warehouse-stat">Stock bajo: 12 unidades</div>
+                        </div>
+                        <span class="status-badge status-critical">Crítico</span>
+                    </div>
+                    <div class="warehouse-item">
+                        <div>
+                            <div class="warehouse-name">SKU-087321 (Pintura Blanca)</div>
+                            <div class="warehouse-stat">Stock moderado: 45 unidades</div>
+                        </div>
+                        <span class="status-badge status-warning">Aviso</span>
+                    </div>
+                    <div class="warehouse-item">
+                        <div>
+                            <div class="warehouse-name">SKU-034556 (Clavos 2")</div>
+                            <div class="warehouse-stat">Stock bajo: 67 unidades</div>
+                        </div>
+                        <span class="status-badge status-warning">Aviso</span>
+                    </div>
+                    <div class="warehouse-item">
+                        <div>
+                            <div class="warehouse-name">SKU-112445 (Rodillos)</div>
+                            <div class="warehouse-stat">Sobrestock: 890 unidades</div>
+                        </div>
+                        <span class="status-badge status-warning">Aviso</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Camera Feed & Accuracy -->
+            <div class="content-grid">
+                <!-- Live Camera -->
+                <div class="card">
+                    <h2>Captura de Cámara en Vivo</h2>
+                    <div class="camera-feed">
+                        <div class="camera-icon">📷</div>
+                        <div class="camera-status">Sistema conectado y funcional</div>
+                        <div style="margin-top: 1rem; font-size: 0.8rem; opacity: 0.7;">Procesando imagénes en tiempo real...</div>
+                    </div>
+                    <button class="btn btn-primary" style="width: 100%;">Iniciar Nueva Captura</button>
+                </div>
+
+                <!-- Accuracy Trend -->
+                <div class="card">
+                    <h2>Tendencia de Precisión</h2>
+                    <div class="chart-bar">
+                        <div class="chart-label">Semana 1</div>
+                        <div class="chart-container">
+                            <div class="chart-fill" style="width: 92%;"></div>
+                        </div>
+                        <div class="chart-value">92%</div>
+                    </div>
+                    <div class="chart-bar">
+                        <div class="chart-label">Semana 2</div>
+                        <div class="chart-container">
+                            <div class="chart-fill" style="width: 95%;"></div>
+                        </div>
+                        <div class="chart-value">95%</div>
+                    </div>
+                    <div class="chart-bar">
+                        <div class="chart-label">Semana 3</div>
+                        <div class="chart-container">
+                            <div class="chart-fill" style="width: 97%;"></div>
+                        </div>
+                        <div class="chart-value">97%</div>
+                    </div>
+                    <div class="chart-bar">
+                        <div class="chart-label">Semana 4</div>
+                        <div class="chart-container">
+                            <div class="chart-fill" style="width: 98%;"></div>
+                        </div>
+                        <div class="chart-value">98%</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Últimas Capturas -->
+            <div class="card">
+                <h2>Últimas Capturas Procesadas</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Fecha/Hora</th>
+                                <th>Almacén</th>
+                                <th>Elementos Detectados</th>
+                                <th>Precisión</th>
+                                <th>Tiempo Procesamiento</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>28/02/2026 14:35</td>
+                                <td>Principal - SD</td>
+                                <td>847</td>
+                                <td><span class="status-badge status-ok">98.5%</span></td>
+                                <td>2.3 seg</td>
+                                <td><button class="btn btn-secondary" style="padding: 0.3rem 0.6rem;">Ver</button></td>
+                            </tr>
+                            <tr>
+                                <td>28/02/2026 12:15</td>
+                                <td>Distribución - SD</td>
+                                <td>623</td>
+                                <td><span class="status-badge status-ok">97.8%</span></td>
+                                <td>1.9 seg</td>
+                                <td><button class="btn btn-secondary" style="padding: 0.3rem 0.6rem;">Ver</button></td>
+                            </tr>
+                            <tr>
+                                <td>28/02/2026 10:45</td>
+                                <td>Retail - Santiago</td>
+                                <td>534</td>
+                                <td><span class="status-badge status-ok">99.2%</span></td>
+                                <td>1.8 seg</td>
+                                <td><button class="btn btn-secondary" style="padding: 0.3rem 0.6rem;">Ver</button></td>
+                            </tr>
+                            <tr>
+                                <td>27/02/2026 16:20</td>
+                                <td>Principal - SD</td>
+                                <td>912</td>
+                                <td><span class="status-badge status-warning">96.5%</span></td>
+                                <td>2.1 seg</td>
+                                <td><button class="btn btn-secondary" style="padding: 0.3rem 0.6rem;">Ver</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
